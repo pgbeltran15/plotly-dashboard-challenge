@@ -1,58 +1,77 @@
-function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-  }
-function init(){
-    d3.json("/samples.json").then(function(data){
-        // console.log(data)
-    
-        var sample_value = data.samples[0].sample_values;
-        var otu_id = data.samples[0].otu_ids;
-        var otu_label = data.samples[0].otu_labels;
-        console.log(sample_value);
-        console.log(otu_id);
-        // console.log(otu_labels);
-        var sortedData = data.samples.sort((a,b)=> b.sample_value - a.sample_value);
-        slicedData= sortedData.slice(0, 10);
-        reversedData = slicedData.reverse();
-        console.log(reversedData[0].otu_ids)
+// function unpack(rows, index) {
+//     return rows.map(function(row) {
+//       return row[index];
+//     });
+//   }
+// function showPlot(){
+//     d3.json("/samples.json").then(function(data){
+//         console.log(data)
+
+//         var sample_value = data.samples[0].sample_values;
+//         var otu_id = data.samples[0].otu_ids;
+//         var otu_label = data.samples[0].otu_labels;
+//         console.log(sample_value);
+//         // console.log(otu_id);
+//         // // console.log(otu_labels);
+//         var sortedData = data.samples.sort((a,b)=> b.sample_value - a.sample_value);
+//         slicedData= sortedData.slice(0, 10);
+//         reversedData = slicedData.reverse();
+//         // console.log(reversedData[0].otu_ids)
+
+//         // var meta_ID = data.metadata.map(s => s.id);
+//         // console.log(meta_ID)
         
-        // var sample_values = Object.values(data.samples[0])
+//         // var sample_id = 
+//         // var sample_values = Object.values(data.samples[0])
         
-        var trace1= {
-          x: reversedData[0].sample_values,
-          y: `Otu:${reversedData[0].otu_ids}`,
-          orientation: "h",
-          text: reversedData[0].otu_labels,
-          type: "bar"
-        };
+//         var trace1= {
+//           x: reversedData[0].sample_values,
+//           y: `Otu:${reversedData[0].otu_ids}`,
+//           orientation: "h",
+//           text: reversedData[0].otu_labels,
+//           type: "bar"
+//         };
 
-        // var trace1= {
-        //   x: sample_value,
-        //   y: `Otu:${otu_id}`,
-        //   orientation: "h",
-        //   text: otu_label,
-        //   type: "bar"
-        // };
+//         // var trace1= {
+//         //   x: sample_value,
+//         //   y: `Otu:${otu_id}`,
+//         //   orientation: "h",
+//         //   text: otu_label,
+//         //   type: "bar"
+//         // };
 
-        var data = [trace1];
+        
+//         var trace2= {
+//           x: reversedData[0].sample_values,
+//           y: `Otu:${reversedData[0].otu_ids}`,
+//           text: reversedData[0].otu_labels,
+//           mode: "markers",
+//           marker: {
+//             size: [40, 60, 80, 100]
+//           }
+//         };
+        
 
-        var layout = {
-          yaxis: {
-            autorange: true,
-            type: "linear"
-          },
-          xaxis: {
-            autorange: true,
-            type: "linear"
-          }
-        };
+//         var data1 = [trace1];
 
-        Plotly.newPlot("bar", data)
+//         var data2 = [trace2]
 
-});
-}
+//         var layout = {
+//           yaxis: {
+//             autorange: true,
+//             type: "linear"
+//           },
+//           xaxis: {
+//             autorange: true,
+//             type: "linear"
+//           }
+//         };
+
+//         Plotly.newPlot("bar", data1)
+//         Plotly.newPlot("bubble",data2)
+
+// });
+// }
 
 
 // function createPlots(){
@@ -123,4 +142,5 @@ function init(){
 // });
 // }
 
-init()
+
+// showPlot()
