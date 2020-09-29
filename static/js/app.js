@@ -112,3 +112,41 @@ function getMetaData(sample) {
     });
 };
 
+function init() {
+    // Initialize Page
+  
+    // Read the samples.json data and extract all the Data Sample names
+    d3.json("samples.json").then(function (data) {
+      // console.log(data);
+      var sampleNames = data.names;
+  
+      d3.selectAll("#selDataset")
+        .selectAll("option")
+        .data(sampleNames)
+        .enter()
+        .append("option")
+        .attr("value", function (d) { return d; })
+        .text(function (d) { return d; });
+  
+      // Use the first set of the sample data to build the initial plots and Metadata display
+      const firstSampleName = sampleNames[0];
+  
+      // Build the Charts (Bar and Bubble)
+      createCharts(firstSampleName);
+      
+      // Build the Demographic Metadata 
+      getMetaData(firstSampleName);
+  
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+function optionChanged(newsample) {
+    //grab new data each time a new sample is selected
+    createCharts(newsample);
+    getMetaData(newsample);
+};
+
+//call init to set the default loading page
+init();
