@@ -29,11 +29,12 @@ function createCharts(sample) {
         //bar trace
         trace1 = {
             type: "bar",
+            orientation: 'h',
             x: reversedTopTen.map(row => row.sample_value),
             y: reversedTopTen.map(row => row.otu_id),
             mode: 'markers',
             marker: {
-                color: colors,
+                color: 'blue',
                 line: {
                     color:'rgb'
                 }
@@ -82,7 +83,32 @@ function createCharts(sample) {
         };
 
         //bubble plot
-        Plotly.newPlot('buble', bubbledata, bubble_layout);
+        Plotly.newPlot('bubble', bubbledata, bubble_layout);
+    });
+};
+  
+function getMetaData(sample) {
+    //Builds Demographic info
+
+    d3.json("samples.json").then((MetaDataSample)=> {
+        var metadataResult = MetaDataSample.metadata.filter(sampleObject => sampleObject.id == sample);
+
+        //select infobox to place data storage
+        var info_box = d3.select('#sample-metadata');
+        //clear previous data
+        info_box.html("");
+
+        //add ul list tag
+        var info_list = info_box.append('ul')
+        info_list.classed('list-unstlyed', true);
+
+        //use forEach loop to get key, value pairs for the metadata info box 
+
+        Object.entries(metadataResult[0]).forEach(([key, value])=> {
+            var info_box_item = info_list.append('li')
+            info_box_item.html("<strong>" + key + ": " + "</strong>" + value);
+        });
+
     });
 };
 
