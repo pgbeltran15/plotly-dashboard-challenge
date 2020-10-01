@@ -34,9 +34,9 @@ function createCharts(sample) {
             y: reversedTopTen.map(row => row.otu_id),
             mode: 'markers',
             marker: {
-                color: 'blue',
+                color: 'darkblue',
                 line: {
-                    color:'rgb'
+                    color:'black'
                 }
             },
             text: reversedTopTen.map(row => row.otu_label)
