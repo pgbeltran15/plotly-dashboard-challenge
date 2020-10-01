@@ -27,6 +27,7 @@ function createCharts(sample) {
         var reversedTopTen = topTen.reverse();
 
         //bar trace
+        var colors = ['#3498DB', '#2980B9', '#2E86C1', '#2471A3', '#2874A6', '#1F618D', '#21618C', '#1a5276', '#1b4f73', '#154360']
         trace1 = {
             type: "bar",
             orientation: 'h',
@@ -34,7 +35,7 @@ function createCharts(sample) {
             y: reversedTopTen.map(row => row.otu_id),
             mode: 'markers',
             marker: {
-                color: 'darkblue',
+                color: colors,
                 line: {
                     color:'black'
                 }
@@ -46,7 +47,8 @@ function createCharts(sample) {
 
         //bar layout
         bar_layout= {
-            title:`Top Ten OTU Data`,
+            title:`<b>Top Ten OTU Data</b><br><span style='font-size:0.8em';>Subject ID #${result.id}</span>`,
+            font: { color: "darkblue" },
             yaxis: {autoarange: true},
             xaxis: {autoarange: true}
         }
@@ -70,7 +72,8 @@ function createCharts(sample) {
 
         //bubble layout
         bubble_layout = {
-            title: 'OTU Data',
+            title: `<b>OTU Data</b><br><span style='font-size:0.8em';>Subject ID #${result.id}</span>`,
+            font: { color: "darkblue" },
             xaxis: {
                 autorange: true,
                 type: "linear",
@@ -122,7 +125,8 @@ function createGauge(sample) {
     gauge_trace = [{
         type: "indicator",
         mode: "gauge+number+delta",
-        title: '<b>Belly Button Washing Frequency</b><br>Scrubs per week<br>',
+        title: "<b>Belly Button Washing Frequency</b><br><span style='font-size:0.8em';>Subject ID #" + gaugedataResult[0].id +
+        " - Scrubs per week</span><br><span style='font-size:0.6em';>",
         domain: {
           x: [0, 5],
           y: [0, 1]
@@ -132,7 +136,7 @@ function createGauge(sample) {
             // Setting the max of the range to 10 (max(wfreq) + 1)
             range: [null, 10],
             tickwidth: 1,
-            tickcolor: "darkblue"
+            tickcolor: "black"
           },
           bar: { color: "darkblue" },
           steps: [
