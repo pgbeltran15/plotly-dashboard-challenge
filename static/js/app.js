@@ -112,6 +112,70 @@ function getMetaData(sample) {
     });
 };
 
+function createGauge(sample) {
+    //Builds Demographic info
+
+    d3.json("samples.json").then((GaugeDataSample)=> {
+        var gaugedataResult = GaugeDataSample.metadata.filter(sampleObject => sampleObject.id == sample);
+        
+    // gauge chart trace
+    gauge_trace = [{
+        type: "indicator",
+        mode: "gauge+number+delta",
+        title: '<b>Belly Button Washing Frequency</b><br>Scrubs per week<br>',
+        domain: {
+          x: [0, 5],
+          y: [0, 1]
+        },
+        gauge: {
+          axis: {
+            // Setting the max of the range to 10 (max(wfreq) + 1)
+            range: [null, 10],
+            tickwidth: 1,
+            tickcolor: "darkblue"
+          },
+          bar: { color: "darkblue" },
+          steps: [
+            { range: [0, 1.99], color: "rgb(133,193,233)" },
+            { range: [1.99, 2.01], color: "red" }, // Represents the Median value
+            { range: [2.01, 4], color: "rgb(93,173,226)" },
+            { range: [4, 6], color: "rgb(52,152,219)" },
+            { range: [6, 8], color: "rgb(46,134,193)" },
+            { range: [8, 8.99], color: "rgb(40,116,166)" },
+            { range: [8.99, 9.01], color: "red" }, // Represents the Max value
+            { range: [9.01, 10], color: "rgb(37,97,140)" },
+          ],
+          threshold: {
+            line: { color: "red", width: 6 },
+            thickness: 0.8,
+            value: 9.95
+          }
+        },
+        // Cast any NULL values to Zero
+        value: Number(gaugedataResult[0].wfreq),
+        delta: { reference: 2, increasing: { color: "Green" } }
+      }];
+  
+      // Gauge chart layout
+      gauge_layout = {
+        width: 520,
+        height: 470,
+        margin: { t: 10, r: 25, l: 15, b: 10 },
+        font: { color: "darkblue" }
+      };
+  
+      var hvr = d3.select("#gauge");
+      console.log(hvr);
+  
+      // Gauge plot
+  
+      Plotly.newPlot('gauge', gauge_trace, gauge_layout);
+  
+
+    });
+};
+
+
 function init() {
     // Initialize Page
   
@@ -136,6 +200,9 @@ function init() {
       
       // Build the Demographic Metadata 
       getMetaData(firstSampleName);
+
+      // Build Gauge Chart
+      createGauge(firstSampleName);
   
     }).catch(function (error) {
       console.log(error);
@@ -146,6 +213,7 @@ function optionChanged(newsample) {
     //grab new data each time a new sample is selected
     createCharts(newsample);
     getMetaData(newsample);
+    createGauge(newsample)
 };
 
 //call init to set the default loading page
